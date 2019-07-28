@@ -19,6 +19,7 @@ class SmartphoneSpiderSpider(CrawlSpider):
 
     rules = (
         Rule(LinkExtractor(restrict_xpaths='//li[@class="product-item"]/div[@class="item-info"]/p[@class="h4"]/a'), callback='parse_item', follow=True),
+        Rule(LinkExtractor(restrict_xpaths='//a[@class="pages"]'), follow=True),
     )
 
     def parse_item(self, response):
