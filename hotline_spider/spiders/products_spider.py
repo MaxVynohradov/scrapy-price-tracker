@@ -8,8 +8,8 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
 
-class SmartphoneSpiderSpider(CrawlSpider):
-    name = 'smartphone_spider'
+class ProductsSpider(CrawlSpider):
+    name = 'products_spider'
     allowed_domains = ['hotline.ua']
     start_urls = ['https://hotline.ua/mobile/mobilnye-telefony-i-smartfony/']
 
@@ -30,7 +30,7 @@ class SmartphoneSpiderSpider(CrawlSpider):
             value = feature.xpath('td/span/a/text()').get() or feature.xpath('td/p/text()').get()
             if key and value:
                 features[key.strip().replace(':', '')] = value.strip()
-        product['time_series'] = SmartphoneSpiderSpider.load_csv(product['card_id'])
+        product['time_series'] = ProductsSpider.load_csv(product['card_id'])
         yield product
 
     @staticmethod
