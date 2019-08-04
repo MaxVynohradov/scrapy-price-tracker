@@ -13,6 +13,7 @@ BOT_NAME = 'hotline_spider'
 
 SPIDER_MODULES = ['hotline_spider.spiders']
 NEWSPIDER_MODULE = 'hotline_spider.spiders'
+LOG_LEVEL = 'INFO'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -64,9 +65,9 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 3
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'hotline_spider.pipelines.HotlineSpiderPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'hotline_spider.pipelines.MongoPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,3 +89,7 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 3
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+MONGO_URI=''
+MONGO_DATABASE='diplom'
