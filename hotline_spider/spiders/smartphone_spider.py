@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-import pprint
 import random
 from urllib.request import urlopen
 import csv
 import datetime
 from io import StringIO
-import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-
-pp = pprint.PrettyPrinter(width=41, compact=True)
 
 
 class SmartphoneSpiderSpider(CrawlSpider):
@@ -28,13 +24,13 @@ class SmartphoneSpiderSpider(CrawlSpider):
         product['features'] = features
         product['card_title'] = str(response.xpath('//h1[@datatype="card-title"]/text()').get()).strip()
         product['card_id'] = str(response.css('span[data-card-id]::attr(data-card-id)').get()).strip()
+        product['image'] = str(response.css('.zg-canvas-img::attr(src)').get()).strip()
         for index, feature in enumerate(response.xpath('//table[@class="seo-table"]/tr')):
             key = feature.xpath('td/text()').get()
             value = feature.xpath('td/span/a/text()').get() or feature.xpath('td/p/text()').get()
-            if (key and value):
+            if key and value:
                 features[key.strip().replace(':', '')] = value.strip()
         product['time_series'] = SmartphoneSpiderSpider.load_csv(product['card_id'])
-        pp.pprint(product)
         yield product
 
     @staticmethod
