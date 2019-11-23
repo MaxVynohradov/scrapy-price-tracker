@@ -25,9 +25,9 @@ class ProductsSpider(CrawlSpider):
         product['card_title'] = str(response.xpath('//h1[@datatype="card-title"]/text()').get()).strip()
         product['card_id'] = str(response.css('span[data-card-id]::attr(data-card-id)').get()).strip()
         product['image'] = str(response.css('.zg-canvas-img::attr(src)').get()).strip()
-        for index, feature in enumerate(response.xpath('//table[@class="seo-table"]/tr')):
+        for index, feature in enumerate(response.xpath('//div[@class="specification-table viewbox"]/div[@data-pills="parent"]/div[@data-pills="content"]/table[@class="seo-table"]/tr')):
             key = feature.xpath('td/text()').get()
-            value = feature.xpath('td/span/a/text()').get() or feature.xpath('td/p/text()').get()
+            value = feature.xpath('td/span/text()').get() or feature.xpath('td/text()').get()
             if key and value:
                 features[key.strip().replace(':', '')] = value.strip()
         product['time_series'] = ProductsSpider.load_csv(product['card_id'])
